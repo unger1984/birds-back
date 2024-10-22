@@ -9,19 +9,11 @@ import { WsService } from '../../domain/services/ws.service';
 import { LogFactory } from '../../factories/log.factory';
 import { ConfigEntity } from '../../domain/entities/config.entity';
 import { ChatMessageEntity } from '../../domain/entities/chat.message.entity';
-
-export class WsMessage {
-	command: string;
-	data: any;
-
-	constructor(cmd: string, data: any) {
-		this.command = cmd;
-		this.data = data;
-	}
-}
+import { WsMessage } from '../../domain/entities/ws.message';
+import { UserEntity } from '../../domain/entities/user.entity';
 
 interface ConnectionsPoolType {
-	[key: string]: { connection: WSConnection };
+	[key: string]: { connection: WSConnection; user?: UserEntity | null };
 }
 
 export class WsServiceWebsocket implements WsService {
@@ -53,46 +45,72 @@ export class WsServiceWebsocket implements WsService {
 		setInterval(() => this.sendToAll(new WsMessage('count', Object.keys(this._connectionsPool).length)), 5000);
 
 		wsserver.on('request', async request => {
-			const index = uuid();
-			const connection = request.accept(this._config.ECHO_PROTOCOL, request.origin);
-			this._connectionsPool[index] = { connection };
+			try {
+				const index = uuid();
+				const connection = request.accept(this._config.ECHO_PROTOCOL, request.origin);
+				this._connectionsPool[index] = { connection };
 
-			for (const message of this._lastMessages) {
-				connection.sendUTF(JSON.stringify(new WsMessage('message', message)));
-				// connection.sendUTF(JSON.stringify(new WsMessage('count', Object.keys(this._connectionsPool).length)));
-			}
+				this._log.debug(`connect ${Object.keys(this._connectionsPool).length}`);
 
-			// Обработаем закрытие соединения
-			connection.on('close', () => {
-				if (this._connectionsPool[index]) delete this._connectionsPool[index];
-				// connection.sendUTF(JSON.stringify(new WsMessage('count', Object.keys(this._connectionsPool).length)));
-			});
-
-			// Обработаем входящие данные
-			connection.on('message', message => {
-				if (message.type === 'utf8') {
-					const msg: WsMessage = JSON.parse(message.utf8Data || '{}');
-					switch (msg.command) {
-						case 'message':
-							this._lastMessages.push(msg.data as ChatMessageEntity);
-							this.sendToAll(new WsMessage('message', msg.data as ChatMessageEntity));
-							break;
-					}
-					// client.publish(
-					//     'websockets',
-					//     JSON.stringify(new WsRedisMessage('fromUser', new WsMessageFromUser(index, msg))),
-					// );
+				this.send(connection, new WsMessage('count', Object.keys(this._connectionsPool).length));
+				for (const message of this._lastMessages) {
+					this.send(connection, new WsMessage('message', message));
 				}
-			});
+
+				// Обработаем закрытие соединения
+				connection.on('close', () => {
+					if (this._connectionsPool[index]) delete this._connectionsPool[index];
+					// connection.sendUTF(JSON.stringify(new WsMessage('count', Object.keys(this._connectionsPool).length)));
+				});
+
+				// Обработаем входящие данные
+				connection.on('message', message => {
+					if (message.type === 'utf8') {
+						const msg: WsMessage = JSON.parse(message.utf8Data || '{}');
+
+						this._log.debug(msg);
+
+						switch (msg.command) {
+							case 'message':
+								if (this._connectionsPool[index].user) {
+									const chatMsg = msg.data as ChatMessageEntity;
+									chatMsg.user = this._connectionsPool[index].user;
+									this._lastMessages.push(chatMsg);
+									this.sendToAll(new WsMessage('message', chatMsg));
+								} else {
+									this._log.error('user not signing');
+								}
+								break;
+							case 'sign':
+								this._connectionsPool[index].user = msg.data;
+								break;
+						}
+						// client.publish(
+						//     'websockets',
+						//     JSON.stringify(new WsRedisMessage('fromUser', new WsMessageFromUser(index, msg))),
+						// );
+					}
+				});
+			} catch (error) {
+				this._log.error(error);
+			}
 		});
 
 		// this._microserviceMessangerService.subscribe('logwebsocket', msg => this._localListener(msg));
 	}
 
-	public sendToAll(message: any) {
+	public send(connection: WSConnection, message: WsMessage): void {
+		try {
+			connection.sendUTF(JSON.stringify(message));
+		} catch (exception) {
+			this._log.error({ method: 'send', exception, stack: exception.stack });
+		}
+	}
+
+	public sendToAll(message: WsMessage) {
 		try {
 			Object.keys(this._connectionsPool).forEach(key => {
-				this._connectionsPool[key].connection.sendUTF(JSON.stringify(message));
+				this.send(this._connectionsPool[key].connection, message);
 			});
 		} catch (exception) {
 			this._log.error({ method: 'sendToAll', exception, stack: exception.stack });
