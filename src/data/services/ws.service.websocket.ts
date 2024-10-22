@@ -50,6 +50,8 @@ export class WsServiceWebsocket implements WsService {
 			autoAcceptConnections: false,
 		});
 
+		setInterval(() => this.sendToAll(new WsMessage('count', Object.keys(this._connectionsPool).length)), 5000);
+
 		wsserver.on('request', async request => {
 			const index = uuid();
 			const connection = request.accept(this._config.ECHO_PROTOCOL, request.origin);
@@ -57,13 +59,13 @@ export class WsServiceWebsocket implements WsService {
 
 			for (const message of this._lastMessages) {
 				connection.sendUTF(JSON.stringify(new WsMessage('message', message)));
-				connection.sendUTF(JSON.stringify(new WsMessage('count', Object.keys(this._connectionsPool).length)));
+				// connection.sendUTF(JSON.stringify(new WsMessage('count', Object.keys(this._connectionsPool).length)));
 			}
 
 			// Обработаем закрытие соединения
 			connection.on('close', () => {
 				if (this._connectionsPool[index]) delete this._connectionsPool[index];
-				connection.sendUTF(JSON.stringify(new WsMessage('count', Object.keys(this._connectionsPool).length)));
+				// connection.sendUTF(JSON.stringify(new WsMessage('count', Object.keys(this._connectionsPool).length)));
 			});
 
 			// Обработаем входящие данные
