@@ -53,14 +53,17 @@ export class WsServiceWebsocket implements WsService {
 		wsserver.on('request', async request => {
 			const index = uuid();
 			const connection = request.accept(this._config.ECHO_PROTOCOL, request.origin);
+			this._connectionsPool[index] = { connection };
 
 			for (const message of this._lastMessages) {
-				connection.sendUTF(JSON.stringify({ command: 'message', data: message }));
+				connection.sendUTF(JSON.stringify(new WsMessage('message', message)));
+				connection.sendUTF(JSON.stringify(new WsMessage('count', Object.keys(this._connectionsPool).length)));
 			}
 
 			// Обработаем закрытие соединения
 			connection.on('close', () => {
 				if (this._connectionsPool[index]) delete this._connectionsPool[index];
+				connection.sendUTF(JSON.stringify(new WsMessage('count', Object.keys(this._connectionsPool).length)));
 			});
 
 			// Обработаем входящие данные
@@ -79,7 +82,6 @@ export class WsServiceWebsocket implements WsService {
 					// );
 				}
 			});
-			this._connectionsPool[index] = { connection };
 		});
 
 		// this._microserviceMessangerService.subscribe('logwebsocket', msg => this._localListener(msg));
