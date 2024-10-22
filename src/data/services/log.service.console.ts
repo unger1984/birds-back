@@ -1,6 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
 import { LogLevel, LogService, LogServiceMessage } from '../../domain/services/log.service';
-import * as console from 'node:console';
 import moment from 'moment';
 
 const colors = {
