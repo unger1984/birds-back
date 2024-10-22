@@ -37,7 +37,9 @@
   "devDependencies": {
     "@types/node": "^22.7.7",
     "@types/qs": "^6.9.16",
+    "@types/uuid": "^10.0.0",
     "@types/validator": "^13.12.2",
+    "@types/websocket": "^1.0.10",
     "@typescript-eslint/eslint-plugin": "^7.13.0",
     "@typescript-eslint/parser": "^7.13.0",
     "eslint": "^8.57.1",
