@@ -18,4 +18,5 @@ yarn.lock
 /storage
 .vscode
 *.rdb
-
+.zed
+gstreamer.md

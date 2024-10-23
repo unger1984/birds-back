@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 
+import { ConfigDbEntity } from './config.db.entity';
+
 // eslint-disable-next-line no-shadow
 export enum EnvTypes {
 	development = 'development',
 	production = 'production',
-	local = 'local',
 }
 
 export class ConfigEntity {
@@ -15,14 +16,16 @@ export class ConfigEntity {
 	HTTP_SERVER_PORT: number;
 	HTTP_SERVER_WS: number;
 	ECHO_PROTOCOL: string;
+	db: ConfigDbEntity;
 
 	constructor() {
 		this.SSL_SERVER_KEY = '';
 		this.SSL_SERVER_CRT = '';
-		this.HTTP_SERVER_HOST = '';
+		this.HTTP_SERVER_HOST = 'localhost';
 		this.HTTP_SERVER_PORT = 443;
 		this.HTTP_SERVER_WS = 444;
-		this.ECHO_PROTOCOL = '';
+		this.ECHO_PROTOCOL = 'birds';
 		this.ENV = EnvTypes.development;
+		this.db = new ConfigDbEntity();
 	}
 }

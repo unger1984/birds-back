@@ -8,9 +8,9 @@ import { resolve } from 'path';
 import { WsService } from '../../domain/services/ws.service';
 import { LogFactory } from '../../factories/log.factory';
 import { ConfigEntity } from '../../domain/entities/config.entity';
-import { ChatMessageEntity } from '../../domain/entities/chat.message.entity';
-import { WsMessage } from '../../domain/entities/ws.message';
 import { UserEntity } from '../../domain/entities/user.entity';
+import { WsMessage } from '../../domain/entities/ws.message';
+import { WsDto } from '../../domain/dto/ws.dto';
 
 interface ConnectionsPoolType {
 	[key: string]: { connection: WSConnection; user?: UserEntity | null };
@@ -20,7 +20,7 @@ export class WsServiceWebsocket implements WsService {
 	private readonly _log = LogFactory.getInstance().createLogger('WsServiceWebsocket');
 	private readonly _config: ConfigEntity;
 	private _connectionsPool: ConnectionsPoolType = {};
-	private _lastMessages: ChatMessageEntity[] = [new ChatMessageEntity('Приветствую на онлайн трансляции!')];
+	// private _lastMessages: MessageEntity[] = [new MessageEntity('Приветствую на онлайн трансляции!')];
 
 	constructor(config: ConfigEntity) {
 		this._config = config;
@@ -33,7 +33,7 @@ export class WsServiceWebsocket implements WsService {
 		};
 
 		const server =
-			this._config.ENV === 'local' ? https.createServer(ssl, () => null) : http.createServer(() => null);
+			this._config.ENV === 'development' ? https.createServer(ssl, () => null) : http.createServer(() => null);
 
 		server.listen(this._config.HTTP_SERVER_WS, this._config.HTTP_SERVER_HOST);
 
@@ -42,7 +42,7 @@ export class WsServiceWebsocket implements WsService {
 			autoAcceptConnections: false,
 		});
 
-		setInterval(() => this.sendToAll(new WsMessage('count', Object.keys(this._connectionsPool).length)), 5000);
+		// setInterval(() => this.sendToAll(new WsMessage('count', Object.keys(this._connectionsPool).length)), 5000);
 
 		wsserver.on('request', async request => {
 			try {
@@ -52,10 +52,10 @@ export class WsServiceWebsocket implements WsService {
 
 				this._log.debug(`connect ${Object.keys(this._connectionsPool).length}`);
 
-				this.send(connection, new WsMessage('count', Object.keys(this._connectionsPool).length));
-				for (const message of this._lastMessages) {
-					this.send(connection, new WsMessage('message', message));
-				}
+				// this.send(connection, new WsMessage('count', Object.keys(this._connectionsPool).length));
+				// for (const message of this._lastMessages) {
+				// 	this.send(connection, new WsMessage('message', message));
+				// }
 
 				// Обработаем закрытие соединения
 				connection.on('close', () => {
@@ -66,25 +66,25 @@ export class WsServiceWebsocket implements WsService {
 				// Обработаем входящие данные
 				connection.on('message', message => {
 					if (message.type === 'utf8') {
-						const msg: WsMessage = JSON.parse(message.utf8Data || '{}');
+						const msg: WsDto = JSON.parse(message.utf8Data || '{}');
 
 						this._log.debug(msg);
 
-						switch (msg.command) {
-							case 'message':
-								if (this._connectionsPool[index].user) {
-									const chatMsg = msg.data as ChatMessageEntity;
-									chatMsg.user = this._connectionsPool[index].user;
-									this._lastMessages.push(chatMsg);
-									this.sendToAll(new WsMessage('message', chatMsg));
-								} else {
-									this._log.error('user not signing');
-								}
-								break;
-							case 'sign':
-								this._connectionsPool[index].user = msg.data;
-								break;
-						}
+						// switch (msg.cmd) {
+						// 	case 'message':
+						// 		if (this._connectionsPool[index].user) {
+						// 			const chatMsg = msg.data as MessageEntity;
+						// 			chatMsg.user = this._connectionsPool[index].user;
+						// 			this._lastMessages.push(chatMsg);
+						// 			this.sendToAll(new WsMessage('message', chatMsg));
+						// 		} else {
+						// 			this._log.error('user not signing');
+						// 		}
+						// 		break;
+						// 	case 'sign':
+						// 		this._connectionsPool[index].user = msg.data;
+						// 		break;
+						// }
 						// client.publish(
 						//     'websockets',
 						//     JSON.stringify(new WsRedisMessage('fromUser', new WsMessageFromUser(index, msg))),

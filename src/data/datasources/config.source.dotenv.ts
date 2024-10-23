@@ -5,6 +5,9 @@ import { ConfigEntity } from '../../domain/entities/config.entity';
 import { LogFactory } from '../../factories/log.factory';
 import { LogLevel } from '../../domain/services/log.service';
 
+const incFields = ['DB_USER', 'DB_PASS', 'DB_BASE', 'DB_HOST'];
+const excFields = ['db'];
+
 export class ConfigSourceDotenv implements ConfigSource {
 	private readonly _log = LogFactory.getInstance().createLogger('ConfigSourceDotenv');
 	private _config: ConfigEntity;
@@ -21,16 +24,43 @@ export class ConfigSourceDotenv implements ConfigSource {
 			array.push(key);
 		}
 		let error = false;
-		for (const key of [...Object.keys(new ConfigEntity())]) {
+		for (const key of [...Object.keys(new ConfigEntity()), ...incFields]) {
 			const exist = array.includes(key);
 			// Проверяем что
-			if (!exist) {
+			if (!exist && !excFields.includes(key)) {
 				this._log.warn(`Не определен ${key} в .env`);
 				error = true;
-			} else {
-				this._config[key] = typeof this._config[key] === 'number' ? parseInt(dotenv[key]) : dotenv[key];
-				process.env[key] = typeof this._config[key] === 'number' ? parseInt(dotenv[key]) : dotenv[key];
-				this._log.info(`Значение для ${key} установлено: ${dotenv[key]}`);
+			}
+
+			if (!error) {
+				if (key === 'db') {
+					this._config.db = {
+						username: dotenv.DB_USER || 'root',
+						password: dotenv.DB_PASS || '',
+						database: dotenv.DB_BASE || 'test',
+						dialect: 'postgres',
+						host: dotenv.DB_HOST || 'localhost',
+						port: parseInt(dotenv.DB_PORT || '5432'),
+						logging: dotenv.NODE_ENV !== 'production',
+						define: {
+							charset: 'utf8',
+							dialectOptions: {
+								collate: 'utf8_general_ci',
+							},
+							freezeTableName: true,
+						},
+						dialectOptions: {
+							useUTC: true,
+							timezone: '00:00',
+						},
+						timezone: '00:00',
+					};
+					this._log.info(`Значение для ${key} установлено: ${JSON.stringify(this._config.db)}`);
+				} else if (!excFields.includes(key) && !incFields.includes(key)) {
+					this._config[key] = typeof this._config[key] === 'number' ? parseInt(dotenv[key]) : dotenv[key];
+					process.env[key] = typeof this._config[key] === 'number' ? parseInt(dotenv[key]) : dotenv[key];
+					this._log.info(`Значение для ${key} установлено: ${dotenv[key]}`);
+				}
 			}
 		}
 

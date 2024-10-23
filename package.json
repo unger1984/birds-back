@@ -28,9 +28,13 @@
     "media-rtsp": "^1.0.1",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.46",
+    "pg": "^8.13.0",
     "qs": "^6.13.0",
     "rimraf": "^6.0.1",
     "rtsp-streaming-server": "git+https://github.com/slyoldfox/rtsp-streaming-server.git",
+    "sequelize": "^6.37.4",
+    "sequelize-typescript": "^2.1.6",
+    "umzug": "^3.8.2",
     "uuid": "^10.0.0",
     "websocket": "^1.0.35"
   },
