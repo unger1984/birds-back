@@ -16,6 +16,7 @@ export class ConfigEntity {
 	HTTP_SERVER_PORT: number;
 	HTTP_SERVER_WS: number;
 	ECHO_PROTOCOL: string;
+	TOKEN: string;
 	db: ConfigDbEntity;
 
 	constructor() {
@@ -26,6 +27,7 @@ export class ConfigEntity {
 		this.HTTP_SERVER_WS = 444;
 		this.ECHO_PROTOCOL = 'birds';
 		this.ENV = EnvTypes.development;
+		this.TOKEN = '';
 		this.db = new ConfigDbEntity();
 	}
 }

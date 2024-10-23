@@ -6,6 +6,7 @@ export enum WsCmd {
 	message = 'message',
 	sign_in = 'sign_in',
 	auth = 'auth',
+	count = 'count',
 }
 
 export class WsData {}
@@ -40,6 +41,15 @@ export class WsDataAuth extends WsData {
 		super();
 		this.token = token;
 		this.user = user;
+	}
+}
+
+export class WsDataCount extends WsData {
+	total: number;
+
+	constructor(total: number) {
+		super();
+		this.total = total;
 	}
 }
 

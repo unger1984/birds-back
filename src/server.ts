@@ -15,8 +15,8 @@ class Server {
 			this._log.error({ method: 'Unknown', exception, stack: exception.stack });
 		});
 
-		this._ws = ServiceLocator.getInstance().wsService;
 		this._config = ServiceLocator.getInstance().configSource.config;
+		this._ws = ServiceLocator.getInstance().wsService;
 		this._migrateService = ServiceLocator.getInstance().migrateService;
 
 		this._run();
