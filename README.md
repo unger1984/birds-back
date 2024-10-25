@@ -1,3 +1,3 @@
-# Birds backend
+# BirdsFeeder backend
 
-Backend for https://birds.unger1984.pro
+Backend for pet project https://birds.unger1984.pro
