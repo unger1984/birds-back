@@ -1,11 +1,9 @@
 /node_modules
-.idea
 .fleet
 .env
 .env.production
 smtp.config.json
 **/.DS_Store
-*.iml
 yarn.lock
 **-lock.json
 /nbproject

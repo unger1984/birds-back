@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1198390c-2eed-4398-b876-f46c98b0d246" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../front/src/domain/dto/ws.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/domain/dto/ws.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/presentation/app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/presentation/app.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/presentation/components/header/header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/presentation/components/header/header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/presentation/effectors/chat.effector.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/presentation/effectors/chat.effector.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/presentation/index.dev.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/presentation/index.dev.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/presentation/index.prod.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/presentation/index.prod.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/presentation/lang/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/presentation/lang/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/presentation/lang/ru.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/presentation/lang/ru.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
+        <option value="SCSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;unger1984&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:unger1984/birds-back.git&quot;,
+    &quot;accountId&quot;: &quot;07a54fba-67ff-4606-83d3-374d0b18f86d&quot;
+  }
+}</component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="true" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2nha3xLKdx5o4T67DSdllKSdLOn" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Flutter.main.executor&quot;: &quot;Run&quot;,
+    &quot;Flutter.web.executor&quot;: &quot;Run&quot;,
+    &quot;Mocha.Languages.Multi-language support.should detect and censor profanity in specified languages.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/cobalt/dev/git/ee/birds/front/src/presentation/components/footer&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;SCSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;nodejs.mocha.mocha_node_package_dir&quot;: &quot;/Users/cobalt/dev/git/libs/Profanaty/node_modules/mocha&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.Back.executor&quot;: &quot;Run&quot;,
+    &quot;npm.Front.executor&quot;: &quot;Run&quot;,
+    &quot;npm.build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.clean.executor&quot;: &quot;Run&quot;,
+    &quot;npm.pretest.executor&quot;: &quot;Run&quot;,
+    &quot;npm.test.executor&quot;: &quot;Debug&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/cobalt/dev/git/ee/birds/back/node_modules/prettier&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/cobalt/dev/git/ee/birds/back/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../front/src/presentation/components/footer" />
+      <recent name="$PROJECT_DIR$/../front/src/presentation/lang" />
+      <recent name="$PROJECT_DIR$/../front/src/presentation/components/header" />
+      <recent name="$PROJECT_DIR$/../front/src/presentation/assets/static" />
+      <recent name="$PROJECT_DIR$/../front/src/domain/dto" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../front/src/domain/datasources" />
+      <recent name="$PROJECT_DIR$/public" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.Front">
+    <configuration name="main" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/../birds/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="web" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="additionalArgs" value="--web-port=8444 --web-tls-cert-path=&quot;$PROJECT_DIR$/../../famil/workorder/front/certs/chain.pem&quot; --web-tls-cert-key-path=&quot;$PROJECT_DIR$/../../famil/workorder/front/certs/key.pem&quot; --web-browser-flag=&quot;--disable-web-security&quot;" />
+      <option name="filePath" value="$PROJECT_DIR$/../birds/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Back" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="start" />
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="Front" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/../front/package.json" />
+      <command value="start" />
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Flutter.main" />
+      <item itemvalue="Flutter.web" />
+      <item itemvalue="npm.Front" />
+      <item itemvalue="npm.Back" />
+    </list>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>false</integration-enabled>
+    <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/../../../libs/Profanaty/src/profanity.ts</url>
+          <line>38</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
