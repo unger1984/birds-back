@@ -23,18 +23,21 @@ export class WsUseCases {
 		);
 	}
 
-	public addClient(connection: WSConnection) {
-		const index = uuid();
-		this._clients[index] = new WsClient(index, connection, this);
-		this._log.debug(`connections: ${Object.keys(this._clients).length}`);
-
+	private _sendLastMessage(client: WsClient) {
 		this._messageUseCases.last.then(list => {
 			for (const message of list) {
-				this._clients[index].send(
+				client.send(
 					new WsDto(WsCmd.message, new WsDataMessage(message.text, message.date, new UserDto(message.user))),
 				);
 			}
 		});
+	}
+
+	public addClient(connection: WSConnection) {
+		const index = uuid();
+		this._clients[index] = new WsClient(index, connection, this);
+		this._log.debug(`connections: ${Object.keys(this._clients).length}`);
+		this._sendLastMessage(this._clients[index]);
 	}
 
 	public removeClient(index: string) {
@@ -84,6 +87,9 @@ export class WsUseCases {
 						this.sendToAll(new WsDto(WsCmd.message, message));
 					}
 				}
+				break;
+			case WsCmd.reload_chat:
+				this._sendLastMessage(client);
 				break;
 		}
 	}

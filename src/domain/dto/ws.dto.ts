@@ -7,6 +7,7 @@ export enum WsCmd {
 	sign_in = 'sign_in',
 	auth = 'auth',
 	count = 'count',
+	reload_chat = 'reload_chat',
 }
 
 export class WsData {}
@@ -52,6 +53,8 @@ export class WsDataCount extends WsData {
 		this.total = total;
 	}
 }
+
+export class WsDataReloadChat extends WsData {}
 
 export class WsDto {
 	cmd: WsCmd;
