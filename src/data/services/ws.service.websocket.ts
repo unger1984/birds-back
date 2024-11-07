@@ -54,10 +54,16 @@ export class WsServiceWebsocket implements WsService {
 
 		wsserver.on('request', async request => {
 			try {
-				this._wsUseCases.addClient(
-					request.accept(this._config.ECHO_PROTOCOL, request.origin),
-					request.socket.remoteAddress,
-				);
+				const xforward = request.httpRequest.headers['x-forwarded-for'];
+				let ip;
+				if (xforward && Array.isArray(xforward)) {
+					ip = xforward[0];
+				} else if (xforward) {
+					ip = xforward;
+				} else {
+					ip = request.socket.remoteAddress;
+				}
+				this._wsUseCases.addClient(request.accept(this._config.ECHO_PROTOCOL, request.origin), ip);
 			} catch (error) {
 				this._log.error(error);
 			}
