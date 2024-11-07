@@ -45,9 +45,9 @@ export class WsUseCases {
 	public removeClient(index: string) {
 		const client = this._clients[index];
 		const duration = moment.duration(moment().diff(moment(client.createdAt)));
-		const hours = duration.asHours();
-		const minutes = duration.asMinutes() % 60;
-		const seconds = duration.asSeconds() % 60;
+		const hours = Math.floor(duration.asHours());
+		const minutes = Math.floor(duration.asMinutes() % 60);
+		const seconds = Math.floor(duration.asSeconds() % 60);
 		if (client.user) {
 			this._log.info(`Disconnected ${client.user.email} from ${client.ip} ${hours}:${minutes}:${seconds}`);
 		} else {
