@@ -6,11 +6,13 @@ export class UserEntity {
 	given_name?: string | null;
 	name?: string | null;
 	picture?: string | null;
+	last_seen?: Date | null;
 
 	constructor(profile: ProfileDto) {
 		this.email = profile.email;
 		this.name = profile.name;
 		this.given_name = profile.given_name;
 		this.picture = profile.picture;
+		this.last_seen = new Date();
 	}
 }

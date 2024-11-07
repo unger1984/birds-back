@@ -24,6 +24,11 @@ export default class UserModel extends Model<UserEntity> {
 	@Column({ type: DataType.STRING })
 	picture: string;
 
+	@AllowNull(true)
+	@Default(null)
+	@Column({ type: DataType.DATE })
+	last_seen: Date;
+
 	@CreatedAt
 	created_at: Date;
 

@@ -23,6 +23,7 @@ export class UserUseCases {
 			const { email } = jwt.verify(access, this._config.TOKEN) as { id: number; email: string };
 			const user = await this._userRepository.getByEmail(email);
 			if (user) {
+				await this._userRepository.createOrUpdate({ ...user, last_seen: new Date() });
 				const token = jwt.sign({ id: user.id, email: user.email }, this._config.TOKEN);
 				return { user, token };
 			}
