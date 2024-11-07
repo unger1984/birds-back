@@ -33,17 +33,20 @@ export class WsUseCases {
 		});
 	}
 
-	public addClient(connection: WSConnection) {
+	public addClient(connection: WSConnection, ip?: string) {
 		const index = uuid();
-		this._clients[index] = new WsClient(index, connection, this);
+		this._clients[index] = new WsClient(index, connection, this, ip);
 		this._log.debug(`connections: ${Object.keys(this._clients).length}`);
+		this._log.info(`Connected from ${ip}`);
 		this._sendLastMessage(this._clients[index]);
 	}
 
 	public removeClient(index: string) {
 		const client = this._clients[index];
 		if (client.user) {
-			this._log.info(`User ${client.user.email} disconnected`);
+			this._log.info(`Disconnected ${client.user.email} from ${client.ip}`);
+		} else {
+			this._log.info(`Disconnected from ${client.ip}`);
 		}
 		delete this._clients[index];
 	}
@@ -60,7 +63,7 @@ export class WsUseCases {
 						this._clients[client.uuid].send(
 							new WsDto(WsCmd.auth, new WsDataAuth(token, new UserDto(user))),
 						);
-						this._log.info(`User ${user.email} auth`);
+						this._log.info(`User ${user.email} auth from ${client.ip}`);
 					} else {
 						this._clients[client.uuid].user = null;
 						this._clients[client.uuid].send(new WsDto(WsCmd.auth, new WsDataAuth('not found', null)));
@@ -77,7 +80,7 @@ export class WsUseCases {
 						this._clients[client.uuid].send(
 							new WsDto(WsCmd.auth, new WsDataAuth(token, new UserDto(user))),
 						);
-						this._log.info(`User ${user.email} auth`);
+						this._log.info(`User ${user.email} auth from ${client.ip}`);
 					} else {
 						this._clients[client.uuid].user = null;
 						this._clients[client.uuid].send(new WsDto(WsCmd.auth, new WsDataAuth('not found', null)));

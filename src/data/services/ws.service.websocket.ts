@@ -54,7 +54,10 @@ export class WsServiceWebsocket implements WsService {
 
 		wsserver.on('request', async request => {
 			try {
-				this._wsUseCases.addClient(request.accept(this._config.ECHO_PROTOCOL, request.origin));
+				this._wsUseCases.addClient(
+					request.accept(this._config.ECHO_PROTOCOL, request.origin),
+					request.socket.remoteAddress,
+				);
 			} catch (error) {
 				this._log.error(error);
 			}
