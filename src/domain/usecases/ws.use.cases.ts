@@ -41,6 +41,10 @@ export class WsUseCases {
 	}
 
 	public removeClient(index: string) {
+		const client = this._clients[index];
+		if (client.user) {
+			this._log.info(`User ${client.user.email} disconnected`);
+		}
 		delete this._clients[index];
 	}
 
@@ -56,6 +60,7 @@ export class WsUseCases {
 						this._clients[client.uuid].send(
 							new WsDto(WsCmd.auth, new WsDataAuth(token, new UserDto(user))),
 						);
+						this._log.info(`User ${user.email} auth`);
 					} else {
 						this._clients[client.uuid].user = null;
 						this._clients[client.uuid].send(new WsDto(WsCmd.auth, new WsDataAuth('not found', null)));
@@ -72,6 +77,7 @@ export class WsUseCases {
 						this._clients[client.uuid].send(
 							new WsDto(WsCmd.auth, new WsDataAuth(token, new UserDto(user))),
 						);
+						this._log.info(`User ${user.email} auth`);
 					} else {
 						this._clients[client.uuid].user = null;
 						this._clients[client.uuid].send(new WsDto(WsCmd.auth, new WsDataAuth('not found', null)));
