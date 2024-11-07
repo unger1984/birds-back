@@ -6,6 +6,7 @@ import { UserUseCases } from './user.use.cases';
 import { LogFactory } from '../../factories/log.factory';
 import { MessageUseCases } from './message.use.cases';
 import { UserDto } from '../dto/user.dto';
+import moment from 'moment';
 
 export class WsUseCases {
 	private readonly _log = LogFactory.getInstance().createLogger('WsUseCases');
@@ -43,10 +44,14 @@ export class WsUseCases {
 
 	public removeClient(index: string) {
 		const client = this._clients[index];
+		const duration = moment.duration(moment().diff(moment(client.createdAt)));
+		const hours = duration.asHours();
+		const minutes = duration.asMinutes() % 60;
+		const seconds = duration.asSeconds() % 60;
 		if (client.user) {
-			this._log.info(`Disconnected ${client.user.email} from ${client.ip}`);
+			this._log.info(`Disconnected ${client.user.email} from ${client.ip} ${hours}:${minutes}:${seconds}`);
 		} else {
-			this._log.info(`Disconnected from ${client.ip}`);
+			this._log.info(`Disconnected from ${client.ip} ${hours}:${minutes}:${seconds}`);
 		}
 		delete this._clients[index];
 	}

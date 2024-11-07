@@ -11,12 +11,14 @@ export class WsClient {
 	private readonly _connection: WSConnection;
 	private readonly _wsUsecases: WsUseCases;
 	private _user?: UserEntity | null;
+	private _createdAt: Date;
 
 	constructor(uuid: string, connection: WSConnection, wsUseCases: WsUseCases, ip?: string) {
 		this._uuid = uuid;
 		this._connection = connection;
 		this._wsUsecases = wsUseCases;
 		this._ip = ip;
+		this._createdAt = new Date();
 
 		this._connection.on('close', () => {
 			this._destroy();
@@ -48,6 +50,10 @@ export class WsClient {
 
 	public get ip(): string {
 		return this._ip;
+	}
+
+	public get createdAt(): Date {
+		return this._createdAt;
 	}
 
 	public send(message: WsDto): void {
