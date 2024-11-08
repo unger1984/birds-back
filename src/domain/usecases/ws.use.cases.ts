@@ -1,7 +1,7 @@
 import { WsClient } from '../entities/ws.client';
 import { connection as WSConnection } from 'websocket';
 import { v4 as uuid } from 'uuid';
-import { WsCmd, WsDataAuth, WsDataCount, WsDataMessage, WsDataSignIn, WsDto } from '../dto/ws.dto';
+import { WsCmd, WsDataAuth, WsDataCount, WsDataMessage, WsDataOnline, WsDataSignIn, WsDto } from '../dto/ws.dto';
 import { UserUseCases } from './user.use.cases';
 import { LogFactory } from '../../factories/log.factory';
 import { MessageUseCases } from './message.use.cases';
@@ -104,6 +104,15 @@ export class WsUseCases {
 				break;
 			case WsCmd.reload_chat:
 				this._sendLastMessage(client);
+				break;
+			case WsCmd.online:
+				if (client.user?.email.toLowerCase() === 'unger1984@gmail.com') {
+					this._clients[client.uuid].send(
+						new WsDto(WsCmd.online, new WsDataOnline(Object.values(this._clients))),
+					);
+				} else {
+					this._clients[client.uuid].send(new WsDto(WsCmd.auth, new WsDataAuth('not found', null)));
+				}
 				break;
 		}
 	}

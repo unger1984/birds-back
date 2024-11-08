@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { UserDto } from './user.dto';
+import { OnlineDto } from './online.dto';
+import { WsClient } from '../entities/ws.client';
 
 // eslint-disable-next-line no-shadow
 export enum WsCmd {
@@ -8,6 +10,7 @@ export enum WsCmd {
 	auth = 'auth',
 	count = 'count',
 	reload_chat = 'reload_chat',
+	online = 'online',
 }
 
 export class WsData {}
@@ -55,6 +58,15 @@ export class WsDataCount extends WsData {
 }
 
 export class WsDataReloadChat extends WsData {}
+
+export class WsDataOnline extends WsData {
+	list?: OnlineDto[];
+
+	constructor(list?: WsClient[]) {
+		super();
+		this.list = list?.map(item => new OnlineDto(item));
+	}
+}
 
 export class WsDto {
 	cmd: WsCmd;
