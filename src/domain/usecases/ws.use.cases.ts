@@ -7,16 +7,24 @@ import { LogFactory } from '../../factories/log.factory';
 import { MessageUseCases } from './message.use.cases';
 import { UserDto } from '../dto/user.dto';
 import moment from 'moment';
+import { OnlineRepository } from '../repositories/online.repository';
+import { OnlineLogEntity } from '../entities/online.log.entity';
 
 export class WsUseCases {
 	private readonly _log = LogFactory.getInstance().createLogger('WsUseCases');
 	private _clients: { [key: string]: WsClient } = {};
 	private readonly _userUseCases: UserUseCases;
 	private readonly _messageUseCases: MessageUseCases;
+	private readonly _onlineRepository: OnlineRepository;
 
-	constructor(options: { userUseCases: UserUseCases; messageUseCases: MessageUseCases }) {
+	constructor(options: {
+		userUseCases: UserUseCases;
+		messageUseCases: MessageUseCases;
+		onlineRepository: OnlineRepository;
+	}) {
 		this._userUseCases = options.userUseCases;
 		this._messageUseCases = options.messageUseCases;
+		this._onlineRepository = options.onlineRepository;
 
 		setInterval(
 			() => this.sendToAll(new WsDto(WsCmd.count, new WsDataCount(Object.keys(this._clients).length))),
@@ -53,6 +61,7 @@ export class WsUseCases {
 		} else {
 			this._log.info(`Disconnected from ${client.ip} ${hours}:${minutes}:${seconds}`);
 		}
+		this._onlineRepository.log(new OnlineLogEntity(client));
 		delete this._clients[index];
 	}
 

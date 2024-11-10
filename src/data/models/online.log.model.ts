@@ -8,28 +8,35 @@ import {
 	UpdatedAt,
 	ForeignKey,
 	BelongsTo,
+	Default,
 } from 'sequelize-typescript';
 
 import { UserEntity } from '../../domain/entities/user.entity';
-import { MessageEntity } from '../../domain/entities/message.entity';
 import UserModel from './user.model';
+import { OnlineLogEntity } from '../../domain/entities/online.log.entity';
 
-@Table({ modelName: 'Message', tableName: 'message' })
-export default class MessageModel extends Model<MessageEntity> {
+@Table({ modelName: 'OnlineLog', tableName: 'online_log' })
+export default class OnlineLogModel extends Model<OnlineLogEntity> {
 	@ForeignKey(() => UserModel)
+	@AllowNull(true)
+	@Default(null)
 	@Column({ type: DataType.BIGINT })
-	user_id: number;
+	user_id: number | null;
 
 	@BelongsTo(() => UserModel, 'user_id')
 	user: UserEntity;
 
 	@AllowNull(false)
-	@Column({ type: DataType.TEXT })
-	text: string;
+	@Column({ type: DataType.STRING })
+	ip: string;
 
 	@AllowNull(false)
 	@Column({ type: DataType.DATE })
-	date: Date;
+	connected: Date;
+
+	@AllowNull(false)
+	@Column({ type: DataType.INTEGER })
+	time: number;
 
 	@CreatedAt
 	created_at: Date;

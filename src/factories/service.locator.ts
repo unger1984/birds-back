@@ -14,6 +14,8 @@ import { UserRepository } from '../domain/repositories/user.repository';
 import { UserRepositoryImpl } from '../data/repositories/user.repository.impl';
 import { MessageRepository } from '../domain/repositories/message.repository';
 import { MessageRepositoryImpl } from '../data/repositories/message.repository.impl';
+import { OnlineRepository } from '../domain/repositories/online.repository';
+import { OnlineRepositoryImpl } from '../data/repositories/online.repository.impl';
 
 export class ServiceLocator {
 	private static instance: ServiceLocator;
@@ -24,6 +26,7 @@ export class ServiceLocator {
 	private readonly _googleRepository: GoogleRepository;
 	private readonly _userRepository: UserRepository;
 	private readonly _messageRepository: MessageRepository;
+	private readonly _onlineRepository: OnlineRepository;
 
 	private readonly _migrateService: MigrateService;
 	private readonly _wsService: WsService;
@@ -36,6 +39,7 @@ export class ServiceLocator {
 		this._googleRepository = new GoogleRepositoryImpl(this.apiSource);
 		this._userRepository = new UserRepositoryImpl();
 		this._messageRepository = new MessageRepositoryImpl();
+		this._onlineRepository = new OnlineRepositoryImpl();
 
 		this._migrateService = new MigrateServiceUmzug(this.sequelizeSource.sequelize);
 		this._wsService = new WsServiceWebsocket({
@@ -43,6 +47,7 @@ export class ServiceLocator {
 			userRepository: this.userRepository,
 			googleRepository: this.googleRepository,
 			messageRepository: this.messageRepository,
+			onlineRepository: this.onlineRepository,
 		});
 	}
 
@@ -75,6 +80,10 @@ export class ServiceLocator {
 
 	public get messageRepository(): MessageRepository {
 		return this._messageRepository;
+	}
+
+	public get onlineRepository(): OnlineRepository {
+		return this._onlineRepository;
 	}
 
 	public get migrateService(): MigrateService {
