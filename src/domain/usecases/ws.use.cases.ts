@@ -87,7 +87,7 @@ export class WsUseCases {
 			case WsCmd.sign_in:
 				{
 					const data = dto.data as WsDataSignIn;
-					const payload = await this._userUseCases.singnIn(data.access_token);
+					const payload = await this._userUseCases.singnIn(data.access_token, data.type);
 					if (payload) {
 						const { user, token } = payload;
 						this._clients[client.uuid].user = user;

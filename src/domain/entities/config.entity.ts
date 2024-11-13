@@ -17,6 +17,7 @@ export class ConfigEntity {
 	HTTP_SERVER_WS: number;
 	ECHO_PROTOCOL: string;
 	TOKEN: string;
+	YANDEX_CLIENT_SECRET: string;
 	db: ConfigDbEntity;
 
 	constructor() {
@@ -28,6 +29,7 @@ export class ConfigEntity {
 		this.ECHO_PROTOCOL = 'birds';
 		this.ENV = EnvTypes.development;
 		this.TOKEN = '';
+		this.YANDEX_CLIENT_SECRET = '';
 		this.db = new ConfigDbEntity();
 	}
 }

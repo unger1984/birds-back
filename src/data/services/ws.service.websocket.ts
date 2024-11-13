@@ -14,6 +14,7 @@ import { GoogleRepository } from '../../domain/repositories/google.repository';
 import { MessageUseCases } from '../../domain/usecases/message.use.cases';
 import { MessageRepository } from '../../domain/repositories/message.repository';
 import { OnlineRepository } from '../../domain/repositories/online.repository';
+import { YandexRepository } from '../../domain/repositories/yandex.repository';
 
 export class WsServiceWebsocket implements WsService {
 	private readonly _log = LogFactory.getInstance().createLogger('WsServiceWebsocket');
@@ -26,6 +27,7 @@ export class WsServiceWebsocket implements WsService {
 		googleRepository: GoogleRepository;
 		messageRepository: MessageRepository;
 		onlineRepository: OnlineRepository;
+		yandexRepository: YandexRepository;
 	}) {
 		this._config = option.config;
 		this._wsUseCases = new WsUseCases({
@@ -33,6 +35,7 @@ export class WsServiceWebsocket implements WsService {
 				config: option.config,
 				userRepository: option.userRepository,
 				googleRepository: option.googleRepository,
+				yandexRepository: option.yandexRepository,
 			}),
 			messageUseCases: new MessageUseCases({ messageRepository: option.messageRepository }),
 			onlineRepository: option.onlineRepository,

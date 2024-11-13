@@ -16,6 +16,8 @@ import { MessageRepository } from '../domain/repositories/message.repository';
 import { MessageRepositoryImpl } from '../data/repositories/message.repository.impl';
 import { OnlineRepository } from '../domain/repositories/online.repository';
 import { OnlineRepositoryImpl } from '../data/repositories/online.repository.impl';
+import { YandexRepository } from '../domain/repositories/yandex.repository';
+import { YandexRepositoryImpl } from '../data/repositories/yandex.repository.impl';
 
 export class ServiceLocator {
 	private static instance: ServiceLocator;
@@ -24,6 +26,7 @@ export class ServiceLocator {
 	private readonly _sequelizeSource: SequelizeSource;
 
 	private readonly _googleRepository: GoogleRepository;
+	private readonly _yandexRepository: YandexRepository;
 	private readonly _userRepository: UserRepository;
 	private readonly _messageRepository: MessageRepository;
 	private readonly _onlineRepository: OnlineRepository;
@@ -37,6 +40,7 @@ export class ServiceLocator {
 		this._sequelizeSource = new SequelizeSourceImpl(this.configSource.config);
 
 		this._googleRepository = new GoogleRepositoryImpl(this.apiSource);
+		this._yandexRepository = new YandexRepositoryImpl(this.apiSource, this.configSource.config);
 		this._userRepository = new UserRepositoryImpl();
 		this._messageRepository = new MessageRepositoryImpl();
 		this._onlineRepository = new OnlineRepositoryImpl();
@@ -46,6 +50,7 @@ export class ServiceLocator {
 			config: this.configSource.config,
 			userRepository: this.userRepository,
 			googleRepository: this.googleRepository,
+			yandexRepository: this.yandexRepository,
 			messageRepository: this.messageRepository,
 			onlineRepository: this.onlineRepository,
 		});
@@ -72,6 +77,10 @@ export class ServiceLocator {
 
 	public get googleRepository(): GoogleRepository {
 		return this._googleRepository;
+	}
+
+	public get yandexRepository(): YandexRepository {
+		return this._yandexRepository;
 	}
 
 	public get userRepository(): UserRepository {
