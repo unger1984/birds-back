@@ -24,9 +24,9 @@ export class WsClient {
 			this._destroy();
 		});
 
-		this._connection.on('error', () => {
-			// this._log.error({ method: 'ws', exception, stack: exception.stack });
-		});
+		// this._connection.on('error', () => {
+		// 	// this._log.error({ method: 'ws', exception, stack: exception.stack });
+		// });
 
 		this._connection.on('message', async message => {
 			if (message.type === 'utf8') {
