@@ -64,7 +64,7 @@ export class WsClient {
 		try {
 			this._connection.sendUTF(JSON.stringify(message));
 		} catch (exception) {
-			this._log.error({ method: 'send', exception, stack: exception.stack });
+			// this._log.error({ method: 'send', exception, stack: exception.stack });
 		}
 	}
 }
